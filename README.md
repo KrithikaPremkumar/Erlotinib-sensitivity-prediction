@@ -6,7 +6,7 @@
 
 This project builds a regression pipeline to predict Erlotinib drug response (IC50 / LN_IC50) from CCLE gene-expression features using classical ML models.
 
-## Repository Structure
+## Folder Structure
 
 - `notebooks/01_data_ingestion_and_alignment.ipynb` - load and align CCLE + GDSC2 data
 - `notebooks/02_preprocessing_and_feature_reduction.ipynb` - split, variance filter, scale, PCA
@@ -17,6 +17,44 @@ This project builds a regression pipeline to predict Erlotinib drug response (IC
 - `notebooks/utils/` - helper utilities for data and model metrics
 - `reports/tables/` - model comparison and interpretation outputs
 - `reports/figures/` - diagnostic plots
+
+The following folders are created automatically when notebooks run:
+- `data/processed/` - created by Notebook 01
+- `models/` - created by Notebook 02
+- `reports/tables/` - created by Notebook 03
+- `reports/figures/` - created by Notebook 05
+
+The only folder you need to create manually is:
+- `Data/` - place your two raw data files here before running anything.
+
+## Required Folder Structure
+
+Before running, your project should look like this:
+
+```text
+Machine Learning project/
+|
+|-- Data/                                  <- create this manually, add raw data files here
+|   |-- CCLE_Expression_Entrez_2012-09-29.gct
+|   `-- GDSC2_fitted_dose_response_27Oct23.xlsx
+|
+|-- notebooks/
+|   |-- utils/                             <- must contain both utility files
+|   |   |-- __init__.py                    <- create empty file if not present
+|   |   |-- data_utils.py
+|   |   `-- model_utils.py
+|   |-- 01_data_ingestion_and_alignment.ipynb
+|   |-- 02_preprocessing_and_feature_reduction.ipynb
+|   |-- 03_baseline_and_linear_models.ipynb
+|   |-- 04_tree_boosted_models.ipynb
+|   |-- 05_evaluation_and_diagnostics.ipynb
+|   `-- 06_feature_importance_and_biological_interpretation.ipynb
+|
+|-- README.md
+`-- requirements.txt
+```
+
+All notebooks import utilities as `from utils.data_utils import ...`. This requires the `utils/` folder to be inside the `notebooks/` directory where the notebooks are located.
 
 ## Dataset Download Links
 
@@ -29,7 +67,7 @@ Steps:
 1. Open **Drug Sensitivity Data**
 2. Click **Download GDSC2 IC50 data**
 3. Click **View all versions**
-4. Select and download your target CSV (the file you choose for this project should be saved as `GDSC2_fitted_dose_response_27Oct23.csv` in the `Data/` folder)
+4. Select and download your target Excel file (the file you choose for this project should be saved as `GDSC2_fitted_dose_response_27Oct23.xlsx` in the `Data/` folder)
 
 ### 2) CCLE Expression Data (GCT/RES source)
 
@@ -60,7 +98,7 @@ pip install -r requirements.txt
 Create a `Data/` folder at project root and place:
 
 - `Data/CCLE_Expression_Entrez_2012-09-29.gct`
-- `Data/GDSC2_fitted_dose_response_27Oct23.csv`
+- `Data/GDSC2_fitted_dose_response_27Oct23.xlsx`
 
 ## How to Run
 
